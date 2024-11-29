@@ -1,121 +1,555 @@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Book Haven
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#">Book Haven</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      <span class="navbar-text d-flex align-items-center">
-        <!-- Add to Cart Icon -->
-        <a [routerLink]="'/cart'" class="text-white text-decoration-none me-4 position-relative">
-          <img src="./assets/img/icons/dash1.svg" alt="Cart" width="24" />
-          <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle">
-            {{ cart.length }}
+
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Centered Search and Dropdowns -->
+      <div class="mx-auto d-flex align-items-center gap-3">
+        <input
+          id="searchInput"
+          type="text"
+          class="form-control"
+          placeholder="Search for books"
+          (input)="onSearch($event)"
+          style="max-width: 250px;"
+        />
+        <mat-select
+          placeholder="Select Category"
+          class="select"
+          [(value)]="selectedCategory"
+          (selectionChange)="onCategoryChange($event.value)"
+          style="max-width: 200px;"
+        >
+          <mat-option [value]="null">All Categories</mat-option>
+          <mat-option *ngFor="let category of categoryList" [value]="category.categoryName">
+            {{ category.categoryName }}
+          </mat-option>
+        </mat-select>
+        <mat-select
+          placeholder="Select Sub-Category"
+          class="select"
+          [(value)]="selectedSubCategory"
+          (selectionChange)="onSubCategoryChange($event.value)"
+          style="max-width: 200px;"
+        >
+          <mat-option [value]="null">All Subcategories</mat-option>
+          <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory.categoryName">
+            {{ subCategory.categoryName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- Right-side Elements -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item me-3">
+          <!--          <a [routerLink]="'/cart'" class="text-white text-decoration-none position-relative">-->
+          <!--            <img src="./assets/img/icons/dash1.svg" alt="Cart" width="24"/>-->
+          <!--            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle">-->
+          <!--              {{ cart.length }}-->
+          <!--            </span>-->
+          <!--          </a>-->
+          <a
+            class="text-white text-decoration-none position-relative"
+            data-bs-toggle="modal"
+            data-bs-target="#cartModal"
+          >
+            <img src="./assets/img/icons/dash1.svg" alt="Cart" width="24"/>
+            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle">
+          {{ cart.length }}
           </span>
-        </a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="dropdown-item logout" [routerLink]="routes.signIn">Sign In
-              <img src="assets/img/icons/log-out.svg" alt="img"/>
-            </a>
-          </li>
-        </ul>
-      </span>
+          </a>
+
+        </li>
+        <li class="nav-item" style="color: #fff!important;">
+          <a class="dropdown-item logout" [routerLink]="routes.signIn">Sign In
+            <img src="assets/img/icons/log-out.svg" alt="img"/>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
 
-
 <!-- Main Content -->
-<div class="container-fluid mt-4">
-  <div class="row">
-    <!-- Filters Section -->
-    <!-- Filters Section -->
-    <div class="col-md-3 flex-grow-1">
-      <div class="filter-section mb-4 bg-light p-3 rounded">
-        <h5>Filters</h5>
-
-        <!-- Search Field -->
-        <div class="mb-3">
-          <label for="searchInput" class="form-label">Search</label>
-          <input
-            id="searchInput"
-            type="text"
-            class="form-control"
-            placeholder="Search for books"
-            (input)="onSearch($event)"
-          />
-        </div>
-
-        <!-- Category Dropdown -->
-        <div class="mb-3">
-          <label class="form-label">Category</label>
-          <mat-select
-            placeholder="Select Category"
-            class="select"
-            [(value)]="selectedCategory"
-            (selectionChange)="onCategoryChange($event.value)"
+<div class=" book-cards-section mt-4">
+  <!-- Book Cards Section -->
+  <div class="row container">
+    <div class="col-lg-3 col-md-4 col-sm-6 mb-4" *ngFor="let book of filteredBooks" style="width: 25%">
+      <div class="card h-100 text-center">
+        <img
+          [src]="book.productImage"
+          class="card-img-top"
+          [alt]="book.bookName"
+        />
+        <div class="card-body">
+          <h6 class="card-title mb-1">{{ book.bookName }}</h6>
+          <p class="card-text mb-2 text-muted" style="margin: 0"><strong>Author.</strong> {{ book.supplier || "N/A" }}
+          </p>
+          <p class="card-text mb-2 text-muted" style="margin: 0"><strong>Rs.</strong> {{ book?.sellingPrice }}</p>
+          <p
+            class="card-text mb-2 text-muted"
+            [ngClass]="{'text-danger': book?.status === 'Sold Out', 'text-success': book?.status === 'Available'}"
+            style="margin: 0"
           >
-            <mat-option [value]="null">All Categories</mat-option>
-            <mat-option *ngFor="let category of categoryList" [value]="category.categoryName">
-              {{ category.categoryName }}
-            </mat-option>
-          </mat-select>
-        </div>
+            {{ book?.status }}
+          </p>
 
-        <!-- Sub-Category Dropdown -->
-        <div class="mb-3">
-          <label class="form-label">Sub Category</label>
-          <mat-select
-            placeholder="Select Sub-Category"
-            class="select"
-            [(value)]="selectedSubCategory"
-            (selectionChange)="onSubCategoryChange($event.value)"
+        </div>
+        <div class="card-footer">
+
+
+          <button
+            class="btn btn-sm btn-primary "
+            data-bs-toggle="modal"
+            data-bs-target="#bookDetailsModal"
+            (click)="showBookDetails(book)">
+            <i class="fas fa-eye"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-warning"
+            (click)="addToCart(book)">
+            <i class="fas fa-cart-plus"></i>
+          </button>
+          <button
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#reviewModal"
+            (click)="showReviews(book)"
           >
-            <mat-option [value]="null">All Subcategories</mat-option>
-            <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory.categoryName">
-              {{ subCategory.categoryName }}
-            </mat-option>
-          </mat-select>
+            <i class="fas fa-address-card"></i>
+          </button>
         </div>
       </div>
     </div>
+  </div>
+
+</div>
 
 
-    <!-- Book Cards Section -->
-    <div class="col-md-9">
-      <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let book of filteredBooks">
-          <div class="card h-100" style="min-height: 300px;">
-            <img
-              [src]="book.productImage"
-              class="card-img-top"
-              [alt]="book.bookName"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ book.bookName }}</h5>
-              <p class="card-text">{{ book.description | slice: 0:100 }}...</p>
-              <p class="card-text">{{ book.createDate }}</p>
-              <p class="card-text">Available Qty :{{ book.qty }}</p>
-              <p class="card-text">Rs. {{ book.sellingPrice }}</p>
-            </div>
-            <div class="card-footer text-center">
-              <button style="background: #075b8c!important;" class="btn btn-primary btn-sm mr-2">View Details</button>
-              <button style="background: #ffbb0d" class="btn  btn-sm mr-2" (click)="addToCart(book)">Add to Cart</button>
+<!-- Modal for Book Details -->
+<div
+  class="modal fade"
+  id="bookDetailsModal"
+  tabindex="-1"
+  aria-labelledby="bookDetailsModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-custom-size modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="bookDetailsModalLabel">{{ selectedBook?.bookName }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close">
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Image Container -->
+        <div class="image-container mb-3 text-center">
+          <img
+            [src]="selectedBook?.productImage"
+            class="modal-image"
+            [alt]="selectedBook?.bookName"/>
+        </div>
+        <p>{{ selectedBook?.description }}</p>
+        <p style="margin: 0"><strong>Author:</strong> {{ selectedBook?.supplier || 'N/A' }}</p>
+        <p style="margin: 0"><strong>Date:</strong> {{ selectedBook?.createDate }}</p>
+        <p style="margin: 0"><strong>Available Quantity:</strong> {{ selectedBook?.qty }}</p>
+        <p style="margin: 0"><strong>Price:</strong> Rs. {{ selectedBook?.sellingPrice }}</p>
+      </div>
+      <div class="modal-footer">
+        <button
+          style="padding: 4px"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          style="background: #ffbb0d;padding: 4px"
+          class="btn btn-group-sm"
+          (click)="addToCart(selectedBook)">
+          Add to Cart
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!---------- Cart Modal ------------->
+<div
+  class="modal fade"
+  id="cartModal"
+  tabindex="-1"
+  aria-labelledby="cartModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cartModalLabel">Checkout</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >X</button>
+      </div>
+      <div class="modal-body">
+        <!-- Tab Navigation -->
+        <ul class="nav nav-pills mb-3 justify-content-center" id="checkoutTabs">
+          <li class="nav-item">
+            <button
+              class="nav-link active"
+              id="tab-cart"
+              data-bs-toggle="pill"
+              data-bs-target="#cartTabContent"
+              type="button"
+            >
+              Cart
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              id="tab-customer"
+              data-bs-toggle="pill"
+              data-bs-target="#customerTabContent"
+              type="button"
+            >
+              Customer Details
+            </button>
+          </li>
+          <li class="nav-item">
+            <button
+              class="nav-link"
+              id="tab-payment"
+              data-bs-toggle="pill"
+              data-bs-target="#paymentTabContent"
+              type="button"
+            >
+              Payment
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tab Contents -->
+        <div class="tab-content">
+          <!-- Cart Tab -->
+          <div
+            class="tab-pane fade show active"
+            id="cartTabContent"
+            role="tabpanel"
+          >
+            <table class="table">
+              <thead>
+              <tr>
+                <th>Book</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let book of cart">
+                <td>{{ book.bookName }}</td>
+                <td>Rs. {{ book.sellingPrice }}</td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <button
+                      class="btn btn-sm btn-outline-secondary me-2"
+                      (click)="decreaseQty(book)"
+                    >
+                      -
+                    </button>
+                    <span>{{ book.qty }}</span>
+                    <button
+                      class="btn btn-sm btn-outline-secondary ms-2"
+                      (click)="increaseQty(book)"
+                    >
+                      +
+                    </button>
+                  </div>
+                </td>
+                <td>Rs. {{ book.sellingPrice * book.qty }}</td>
+                <td>
+                  <button
+                    class="btn btn-sm btn-danger"
+                    (click)="removeFromCart(book)"
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <p class="text-end fw-bold">Total: Rs. {{ calculateTotal() }}</p>
+            <div class="text-end">
+              <button
+                class="btn btn-primary"
+                (click)="navigateTo('tab-customer')"
+              >
+                Next
+              </button>
             </div>
           </div>
+
+          <!-- Customer Details Tab -->
+          <div
+            class="tab-pane fade"
+            id="customerTabContent"
+            role="tabpanel"
+          >
+            <form (ngSubmit)="navigateTo('tab-payment')">
+              <div class="mb-3">
+                <label for="customerName" class="form-label">Mobile Number</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="customerMobileNumber"
+                  [(ngModel)]="customerDetails.mobileNumber"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="customerName" class="form-label">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="customerName"
+                  [(ngModel)]="customerDetails.name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="customerEmail" class="form-label">Email</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="customerEmail"
+                  [(ngModel)]="customerDetails.email"
+                  name="phone"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="customerAddress" class="form-label">Address</label>
+                <textarea
+                  class="form-control"
+                  id="customerAddress"
+                  [(ngModel)]="customerDetails.address"
+                  name="address"
+                  required
+                ></textarea>
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  class="btn btn-secondary me-2"
+                  (click)="navigateTo('tab-cart')"
+                >
+                  Back
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  Next
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Payment Tab -->
+          <div
+            class="tab-pane fade"
+            id="paymentTabContent"
+            role="tabpanel"
+          >
+            <div>
+              <h5>Order Summary</h5>
+              <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of cart">
+                  <span>{{ item.bookName }}</span>
+                  <span>Rs. {{ item.sellingPrice * item.qty }}</span>
+                </li>
+              </ul>
+
+              <!-- Delivery Fee -->
+              <div class="d-flex justify-content-between mb-3">
+                <span>Delivery Fee</span>
+                <span>Rs. {{ deliveryFee }}</span>
+              </div>
+
+              <!-- Total -->
+              <div class="d-flex justify-content-between fw-bold mb-3">
+                <span>Total Amount</span>
+                <span>Rs. {{ calculateTotalWithDelivery() }}</span>
+              </div>
+
+              <!-- Payment Method Selection -->
+              <div class="mb-3">
+                <label class="form-label">Payment Method</label>
+                <div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="paymentCOD"
+                      name="paymentMethod"
+                      [(ngModel)]="paymentMethod"
+                      value="COD"
+                    />
+                    <label class="form-check-label" for="paymentCOD">Cash on Delivery (COD)</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="paymentBank"
+                      name="paymentMethod"
+                      [(ngModel)]="paymentMethod"
+                      value="Bank"
+                    />
+                    <label class="form-check-label" for="paymentBank">Bank Transfer</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bank Transaction ID (Visible only if Bank Transfer is selected) -->
+              <div *ngIf="paymentMethod === 'Bank'" class="mb-3">
+                <label for="bankTransactionId" class="form-label">Bank Transaction ID</label>
+                <input
+                  type="text"
+                  id="bankTransactionId"
+                  class="form-control"
+                  [(ngModel)]="bankTransactionId"
+                  name="bankTransactionId"
+                  placeholder="Enter Bank Transaction ID"
+                />
+              </div>
+
+              <!-- Place Order Button -->
+              <button class="btn btn-success" (click)="placeOrder()">Place Order</button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Review Modal -->
+<div
+  class="modal fade"
+  id="reviewModal"
+  tabindex="-1"
+  aria-labelledby="reviewModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="reviewModalLabel">Reviews for {{ selectedBook?.bookName }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="selectedBook?.reviews?.length > 0; else noReviews">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let review of selectedBook.reviews">
+              <div class="d-flex align-items-center">
+                <i class="fas fa-user-circle fa-2x me-3"></i>
+                <div>
+                  <small class="text-muted">{{ review.customerName }}</small>
+                  <p class="mb-1 mt-2">{{ review.review }}</p>
+                  <div>
+                    <i
+                      class="fas fa-star"
+                      *ngFor="let star of getStars(review.rating); let i = index"
+                      [ngClass]="{'text-warning': i < review.rating, 'text-muted': i >= review.rating}"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <ng-template #noReviews>
+          <p>No reviews available for this book.</p>
+        </ng-template>
+        <!-- Button to Show Add New Review Section -->
+        <div class="text-end mt-3">
+          <button class="btn btn-sm btn-success" (click)="toggleAddReviewSection()">
+            <i class="fas fa-plus-circle"></i> Add Review
+          </button>
+        </div>
+        <!-- Add New Review -->
+        <div *ngIf="showAddReviewSection" class="mt-4">
+          <h5>Add Your Review</h5>
+          <form (ngSubmit)="submitReview()">
+            <div class="mb-3">
+              <label for="review" class="form-label">Review</label>
+              <textarea
+                id="review"
+                class="form-control"
+                [(ngModel)]="newReview.review"
+                name="review"
+                required
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="rating" class="form-label">Rating</label>
+              <input
+                id="rating"
+                type="number"
+                class="form-control"
+                [(ngModel)]="newReview.rating"
+                name="rating"
+                max="5"
+                min="1"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="reviewCustomerName" class="form-label">Customer Name</label>
+              <input
+                id="reviewCustomerName"
+                type="text"
+                class="form-control"
+                [(ngModel)]="newReview.customerName"
+                name="customerName"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="mobileNumber" class="form-label">Mobile Number</label>
+              <input
+                id="mobileNumber"
+                type="text"
+                class="form-control"
+                [(ngModel)]="newReview.mobileNumber"
+                name="mobileNumber"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-warning">Submit</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <!-- Footer -->
-<footer class="bg-dark text-white text-center text-lg-start mt-4">
+<footer class="bg-dark text-white text-center text-lg-start">
   <div class="container p-4">
     <div class="row" style="color: #ffbb0d!important;">
       <!-- About Section -->
@@ -128,7 +562,6 @@
       <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
         <h5 class="text-uppercase">Useful Links</h5>
         <ul class="list-unstyled">
-          <li><a style="color: #ffd573!important;" [routerLink]="routes.dashboard" class="text-white">Account</a></li>
           <li><a style="color: #ffd573!important;" [routerLink]="routes.signIn" class="text-white">Logout</a></li>
           <li><a style="color: #ffd573!important;" href="#" class="text-white">Contact Us</a></li>
         </ul>

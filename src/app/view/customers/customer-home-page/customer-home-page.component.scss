@@ -1,40 +1,101 @@
-/* Card Styles */
+.navbar .mx-auto {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem; /* Spacing between elements */
+}
+
+.navbar .form-control,
+.navbar .select {
+  max-width: 200px; /* Optional: Set a max width for input and dropdowns */
+}
+/* Navbar Brand */
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #fff!important;
+}
+//==========card============
 .card {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
-  height: 300px; /* Set consistent height */
+  height: 250px; /* Compact height */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Ensure proper spacing within card */
+  justify-content: space-between;
 }
 
+/* Image Styles */
 .card img {
-  max-height: 150px; /* Prevent oversized images */
-  object-fit: cover; /* Ensure images fit within the container */
+  max-height: 120px; /* Restrict image height */
+  object-fit: cover; /* Fit within container */
+  border-radius: 8px;
 }
-
+/* Card Hover Effect */
 .card:hover {
   transform: translateY(-5px);
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
-
-/* Filter Section */
-.filter-section {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+/* Card Title and Text */
+.card-title {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-/* Navbar Brand */
-.navbar-brand {
-  font-weight: bold;
-  font-size: 1.5rem;
-  color: #fff;
+.card-text {
+  font-size: 0.8rem;
+}
+/* Card Footer Buttons */
+.card-footer {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2px;
+}
+/* Button Icons */
+.btn i {
+  font-size: 0.8rem;
+}
+
+
+.book-cards-section {
+  overflow-y: auto;
+  height: calc(100vh - 4rem); /* Adjust based on your navbar height */
+  padding-right: 1rem;
 }
 
 /* Smooth Transition Effects */
 .transition {
   transition: all 0.3s ease-in-out;
+}
+
+//====================
+.modal-image {
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* Optional: Add rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-custom-size {
+  max-width: 25%; /* Adjust modal width to 25% of the screen */
+  width: 100%;
+}
+
+//==============
+
+.text-danger {
+  color: red!important;
+}
+
+.text-success {
+  color: green!important;
 }

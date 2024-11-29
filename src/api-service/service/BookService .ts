@@ -61,4 +61,9 @@ export class BookService {
     return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/GetAllBookCategoryWise', payload, { headers });
   }
 
+  public AddBookReviewAndRating(payload: any): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/AddBookReviewAndRating', payload, { headers });
+  }
+
 }
