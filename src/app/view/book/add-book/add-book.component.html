@@ -1,0 +1,104 @@
+<div class="page-header">
+  <div class="page-title">
+    <h4>Book</h4>
+    <h6>Add Book</h6>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="addBookForm" (ngSubmit)="onSubmit()">
+
+      <div class="row">
+        <div class="col-4">
+          <!-- Category Dropdown -->
+          <div class="form-group">
+            <label class="required">Category</label>
+            <mat-select
+              formControlName="CategoryId"
+              placeholder="Select Category"
+              (selectionChange)="onCategoryChange($event.value)"
+              class="select">
+              <mat-option *ngFor="let category of categoryList" [value]="category">
+                {{ category.categoryName }}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="col-4">
+          <!-- Sub-Category Dropdown -->
+          <div class="form-group">
+            <label class="required" >Sub-Category</label>
+            <mat-select
+              formControlName="SubCategoryId"
+              placeholder="Select Sub-Category"
+              (selectionChange)="onSubCategoryChange($event.value)"
+              class="select">
+              <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory">
+                {{ subCategory.categoryName }}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+        <div class="col-4">
+          <!-- Category Code -->
+          <div class="form-group">
+            <label for="categoryCode">Category Code</label>
+            <input id="categoryCode" formControlName="CategoryCode" class="form-control" readonly />
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="required" for="supplier">Supplier Name</label>
+            <input id="supplier" formControlName="Supplier" class="form-control"/>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="required" for="bookName">Book Name</label>
+            <input id="bookName" formControlName="BookName" class="form-control"/>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label class="required" for="qty">Quantity</label>
+            <input id="qty" type="number" formControlName="Qty" class="form-control"/>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label class="required" for="costPrice">Cost Price</label>
+            <input id="costPrice" type="number" formControlName="CostPrice" class="form-control"/>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label class="required" for="sellingPrice">Selling Price</label>
+            <input id="sellingPrice" type="number" formControlName="SellingPrice" class="form-control"/>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label  for="description">Description</label>
+            <textarea id="description" formControlName="Description" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label class="required" for="imageFile">Image File</label>
+            <input id="imageFile" type="file" (change)="onFileSelected($event)" class="form-control"/>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- Image Preview Section -->
+          <div class="form-group" *ngIf="imagePreview">
+            <label >Image Preview:</label>
+            <img [src]="imagePreview" alt="Selected Image" class="img-thumbnail" style="max-width: 200px;"/>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success mr-2">Submit</button>
+    </form>
+
+  </div>
+</div>

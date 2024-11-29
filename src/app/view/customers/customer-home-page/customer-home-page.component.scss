@@ -1,0 +1,40 @@
+/* Card Styles */
+.card {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: 300px; /* Set consistent height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure proper spacing within card */
+}
+
+.card img {
+  max-height: 150px; /* Prevent oversized images */
+  object-fit: cover; /* Ensure images fit within the container */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Filter Section */
+.filter-section {
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Brand */
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Smooth Transition Effects */
+.transition {
+  transition: all 0.3s ease-in-out;
+}

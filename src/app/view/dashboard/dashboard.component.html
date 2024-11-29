@@ -1,0 +1,84 @@
+<div class="row">
+
+  <div class="col-lg-3 col-sm-6 col-12 d-flex">
+    <div class="dash-count">
+      <div class="dash-counts">
+        <h4>
+          {{ totalDrivers }}
+        </h4>
+        <h5>Total Drivers</h5>
+      </div>
+      <div class="dash-imgs">
+        <i-feather name="user"></i-feather>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 col-12 d-flex">
+    <div class="dash-count das1">
+      <div class="dash-counts">
+        <h4>
+          {{ totalPassengers }}
+        </h4>
+        <h5>Total Passengers</h5>
+      </div>
+      <div class="dash-imgs">
+        <i-feather name="user-check"></i-feather>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 col-12 d-flex">
+    <div class="dash-count das2">
+      <div class="dash-counts">
+        <h4>{{totalActiveTrips}}</h4>
+        <h5>Active Trips</h5>
+      </div>
+      <div class="dash-imgs">
+        <i-feather name="file-text"></i-feather>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-6 col-12 d-flex">
+    <div class="dash-count das3">
+      <div class="dash-counts">
+        <h4>{{totalCompletedTrips}}</h4>
+        <h5>Completed Trips</h5>
+      </div>
+      <div class="dash-imgs">
+        <i-feather name="file"></i-feather>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card mb-0">
+  <div class="card-body">
+    <h4 class="card-title">Schedule</h4>
+    <div class="table-responsive dataview">
+      <table (matSortChange)="sortExpiredProducts($event)" matSort matSortActive="Sno" matSortDirection="asc"
+        matSortDisableClear class="table">
+        <thead>
+          <tr>
+            <th mat-sort-header="driverCode">Driver Code</th>
+            <th mat-sort-header="driverName">Driver Name</th>
+            <th mat-sort-header="passengerCode">Passenger Code</th>
+            <th mat-sort-header="passengerName">Passenger Name</th>
+            <th mat-sort-header="tripDate">Trip Date</th>
+            <th mat-sort-header="status">Status</th>
+            <th mat-sort-header="amount">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let trip of trips">
+            <td>{{ trip.driverCode }}</td>
+            <td>{{ trip.driverName }}</td>
+            <td>{{ trip.passengerCode }}</td>
+            <td>{{ trip.passengerName }}</td>
+            <td>{{ trip.tripDate | date: 'short' }}</td>
+            <td>{{ trip.status }}</td>
+            <td>{{ trip.amount | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

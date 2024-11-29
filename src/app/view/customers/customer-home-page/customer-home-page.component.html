@@ -1,0 +1,153 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Book Haven
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+      <span class="navbar-text d-flex align-items-center">
+        <!-- Add to Cart Icon -->
+        <a [routerLink]="'/cart'" class="text-white text-decoration-none me-4 position-relative">
+          <img src="./assets/img/icons/dash1.svg" alt="Cart" width="24" />
+          <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle">
+            {{ cart.length }}
+          </span>
+        </a>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="dropdown-item logout" [routerLink]="routes.signIn">Sign In
+              <img src="assets/img/icons/log-out.svg" alt="img"/>
+            </a>
+          </li>
+        </ul>
+      </span>
+    </div>
+  </div>
+</nav>
+
+
+<!-- Main Content -->
+<div class="container-fluid mt-4">
+  <div class="row">
+    <!-- Filters Section -->
+    <!-- Filters Section -->
+    <div class="col-md-3 flex-grow-1">
+      <div class="filter-section mb-4 bg-light p-3 rounded">
+        <h5>Filters</h5>
+
+        <!-- Search Field -->
+        <div class="mb-3">
+          <label for="searchInput" class="form-label">Search</label>
+          <input
+            id="searchInput"
+            type="text"
+            class="form-control"
+            placeholder="Search for books"
+            (input)="onSearch($event)"
+          />
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="mb-3">
+          <label class="form-label">Category</label>
+          <mat-select
+            placeholder="Select Category"
+            class="select"
+            [(value)]="selectedCategory"
+            (selectionChange)="onCategoryChange($event.value)"
+          >
+            <mat-option [value]="null">All Categories</mat-option>
+            <mat-option *ngFor="let category of categoryList" [value]="category.categoryName">
+              {{ category.categoryName }}
+            </mat-option>
+          </mat-select>
+        </div>
+
+        <!-- Sub-Category Dropdown -->
+        <div class="mb-3">
+          <label class="form-label">Sub Category</label>
+          <mat-select
+            placeholder="Select Sub-Category"
+            class="select"
+            [(value)]="selectedSubCategory"
+            (selectionChange)="onSubCategoryChange($event.value)"
+          >
+            <mat-option [value]="null">All Subcategories</mat-option>
+            <mat-option *ngFor="let subCategory of subCategoryList" [value]="subCategory.categoryName">
+              {{ subCategory.categoryName }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Book Cards Section -->
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let book of filteredBooks">
+          <div class="card h-100" style="min-height: 300px;">
+            <img
+              [src]="book.productImage"
+              class="card-img-top"
+              [alt]="book.bookName"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ book.bookName }}</h5>
+              <p class="card-text">{{ book.description | slice: 0:100 }}...</p>
+              <p class="card-text">{{ book.createDate }}</p>
+              <p class="card-text">Available Qty :{{ book.qty }}</p>
+              <p class="card-text">Rs. {{ book.sellingPrice }}</p>
+            </div>
+            <div class="card-footer text-center">
+              <button style="background: #075b8c!important;" class="btn btn-primary btn-sm mr-2">View Details</button>
+              <button style="background: #ffbb0d" class="btn  btn-sm mr-2" (click)="addToCart(book)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-dark text-white text-center text-lg-start mt-4">
+  <div class="container p-4">
+    <div class="row" style="color: #ffbb0d!important;">
+      <!-- About Section -->
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Book Shop</h5>
+        <p style="color: #ffd573!important;">Your trusted book hub.</p>
+      </div>
+
+      <!-- Links Section -->
+      <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Useful Links</h5>
+        <ul class="list-unstyled">
+          <li><a style="color: #ffd573!important;" [routerLink]="routes.dashboard" class="text-white">Account</a></li>
+          <li><a style="color: #ffd573!important;" [routerLink]="routes.signIn" class="text-white">Logout</a></li>
+          <li><a style="color: #ffd573!important;" href="#" class="text-white">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Social Media Section -->
+      <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+        <h5 class="text-uppercase">Follow Us</h5>
+        <a style="color: #ffd573!important; font-size: 15px" href="#" class="text-white me-4"><i
+          class="fab fa-facebook-f"></i></a>
+        <a style="color: #ffd573!important; font-size: 15px" href="#" class="text-white me-4"><i
+          class="fab fa-twitter"></i></a>
+        <a style="color: #ffd573!important; font-size: 15px" href="#" class="text-white me-4"><i
+          class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2024 Book Shop, All Rights Reserved
+  </div>
+</footer>

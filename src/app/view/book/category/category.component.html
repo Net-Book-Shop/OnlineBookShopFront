@@ -1,0 +1,160 @@
+<div class="page-header">
+  <div class="page-title">
+    <h4>Category</h4>
+    <h6>Add Category & Sub-Category</h6>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Add Category Card -->
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h6>Add Category</h6>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="categoryForm" (ngSubmit)="onAddCategory()">
+          <div class="form-group">
+            <label for="categoryName" class="required">Category Name</label>
+            <input
+              id="categoryName"
+              formControlName="CategoryName"
+              class="form-control"
+              placeholder="Enter Category Name" />
+          </div>
+          <div class="form-group mt-3">
+            <label for="categoryCode" class="required">Category Code</label>
+            <input
+              id="categoryCode"
+              formControlName="CategoryCode"
+              class="form-control text-uppercase"
+              placeholder="Enter 2-character Code"
+              maxlength="2" />
+          </div>
+          <button type="submit" class="btn btn-primary mt-4" [disabled]="categoryForm.invalid">Save Category</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Sub-Category Card -->
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header">
+        <h6>Add Sub-Category</h6>
+      </div>
+      <div class="card-body">
+        <form [formGroup]="subCategoryForm" (ngSubmit)="onAddSubCategory()">
+          <div class="form-group">
+            <label for="subCategoryName"class="required" >Sub-Category Name</label>
+            <input
+              id="subCategoryName"
+              formControlName="SubCategoryName"
+              class="form-control"
+              placeholder="Enter Sub-Category Name" />
+          </div>
+          <div class="form-group mt-3">
+            <label for="subCategoryCode"class="required">Sub-Category Code</label>
+            <input
+              id="subCategoryCode"
+              formControlName="SubCategoryCode"
+              class="form-control"
+              placeholder="Enter Code" />
+          </div>
+          <button type="submit" class="btn btn-primary mt-4" [disabled]="subCategoryForm.invalid">Save Sub-Category</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page-header">
+  <div class="page-title">
+    <h5>View Categories | Subcategories</h5>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <h5>Categories</h5>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" (click)="exportToExcel(categories,'sub category')"
+              ><img src="../../../../assets/img/icons/pdf.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" (click)="exportToExcel(categories,'sub category')"
+              ><img src="../../../../assets/img/icons/excel.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print" (click)="exportToExcel(categories,'sub category')"
+              ><img src="../../../../assets/img/icons/printer.svg" alt="img"
+              /></a>
+            </li>
+          </ul>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Category Name</th>
+            <th>Create Date</th>
+            <th>Category Code</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.categoryName }}</td>
+            <td>{{ category.createDate }}</td>
+            <td>{{ category.categoryCode }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <h5>Subcategories</h5>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" (click)="exportToExcel(subcategories,'sub category')"
+              ><img src="../../../../assets/img/icons/pdf.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" (click)="exportToExcel(subcategories,'sub category')"
+              ><img src="../../../../assets/img/icons/excel.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print" (click)="exportToExcel(subcategories,'sub category')"
+              ><img src="../../../../assets/img/icons/printer.svg" alt="img"
+              /></a>
+            </li>
+          </ul>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>Subcategory Name</th>
+            <th>Subcategory Code</th>
+            <th>Create Date</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let subcategory of subcategories">
+            <td>{{ subcategory.categoryName }}</td>
+            <td>{{ subcategory.categoryCode }}</td>
+            <td>{{ subcategory.createDate }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+

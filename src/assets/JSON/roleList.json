@@ -1,0 +1,14 @@
+{
+  "statusCode": 200,
+  "message": "success",
+  "data": [
+    {
+      "title": "Admin",
+      "value": "Admin"
+    },
+    {
+      "title": "Customer",
+      "value": "Customer"
+    }
+    ]
+  }
