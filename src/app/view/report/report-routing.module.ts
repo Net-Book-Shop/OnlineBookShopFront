@@ -9,13 +9,6 @@ const routes: Routes = [
     component: ReportComponent,
     children: [
       {
-        path: 'trip-report',
-        loadChildren: () =>
-          import('./trip-report/trip-report.component.module').then(
-            (m) => m.TripReportComponentModule
-          ),
-      },
-      {
         path: 'driver-report',
         loadChildren: () =>
           import('./driver-report/driver-report.component.module').then(

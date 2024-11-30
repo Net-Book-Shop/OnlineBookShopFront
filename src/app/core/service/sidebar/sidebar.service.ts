@@ -102,6 +102,13 @@ export class SidebarService {
               subRoutes: [],
             },
             {
+              menuValue: 'View Book',
+              hasSubRoute: false,
+              showSubRoute: false,
+              route: routes.viewBook,
+              subRoutes: [],
+            },
+            {
               menuValue: 'Category',
               hasSubRoute: false,
               showSubRoute: false,

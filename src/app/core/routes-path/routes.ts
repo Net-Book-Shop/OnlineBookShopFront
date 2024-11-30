@@ -88,6 +88,9 @@ export class routes {
   public static get addBook(): string {
     return this.book + '/add-book';
   }
+  public static get viewBook(): string {
+    return this.book + '/view-book';
+  }
   public static get category(): string {
     return this.book + '/category';
   }

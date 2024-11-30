@@ -16,6 +16,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'view-book',
+        loadChildren: () =>
+          import('./view-book/view-book.module').then(
+            (m) => m.ViewBookModule
+          ),
+      },
+      {
         path: 'category',
         loadChildren: () =>
           import('./category/category.module').then(

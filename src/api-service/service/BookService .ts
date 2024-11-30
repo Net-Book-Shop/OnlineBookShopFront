@@ -66,4 +66,13 @@ export class BookService {
     return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/AddBookReviewAndRating', payload, { headers });
   }
 
+  public GetAllBookDateAndCodeWise(payload: any): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/GetAllBookDateAndCodeWise', payload, { headers });
+  }
+
+  public UpdateBookDetail(payload: any): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/UpdateBookDetail', payload, { headers });
+  }
 }

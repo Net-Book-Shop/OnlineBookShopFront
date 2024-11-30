@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as XLSX from 'xlsx';
 import {DriverDetailModel} from "../../../../api-service/model/DriverDetailModel";
-import {TripService} from "../../../../api-service/service/TripService";  // For Excel export
 
 @Component({
   selector: 'app-driver-report',
@@ -13,18 +12,19 @@ export class DriverReportComponent {
   fromDate: string;
   toDate: string;
 
-  constructor(private tripService:TripService) {
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  constructor() {
   }
 
   getDriverReport(payload: any): void {
 
-    this.tripService.getDriverReport(payload).subscribe(value => {
-      if (value.statusCode === 200) {
-        this.drivers = value.data;
-      } else {
-        console.error('Failed to load driver data');
-      }
-    })
+    // this.tripService.getDriverReport(payload).subscribe(value => {
+    //   if (value.statusCode === 200) {
+    //     this.drivers = value.data;
+    //   } else {
+    //     console.error('Failed to load driver data');
+    //   }
+    // })
 
   }
   // Search functionality based on the filter
