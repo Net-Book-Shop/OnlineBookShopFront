@@ -14,9 +14,9 @@ export class DashboardService {
         this.BASEURL = environment.baseURL;
     }
 
-    public getDashboardAnalytics(): Observable<ApiResultFormatModel> {
+    public GetIncomeAndLastMonthProfit(): Observable<ApiResultFormatModel> {
         const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-        return this.http.get<ApiResultFormatModel>(this.BASEURL + 'dashboard/admin/analytics', { headers });
+        return this.http.get<ApiResultFormatModel>(this.BASEURL + 'dashboard/GetIncomeAndLastMonthProfit', { headers });
     }
 
 }

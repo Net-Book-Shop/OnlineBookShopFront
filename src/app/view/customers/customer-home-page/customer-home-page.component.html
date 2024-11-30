@@ -46,12 +46,6 @@
       <!-- Right-side Elements -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item me-3">
-          <!--          <a [routerLink]="'/cart'" class="text-white text-decoration-none position-relative">-->
-          <!--            <img src="./assets/img/icons/dash1.svg" alt="Cart" width="24"/>-->
-          <!--            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle rounded-circle">-->
-          <!--              {{ cart.length }}-->
-          <!--            </span>-->
-          <!--          </a>-->
           <a
             class="text-white text-decoration-none position-relative"
             data-bs-toggle="modal"
@@ -111,7 +105,8 @@
           </button>
           <button
             class="btn btn-sm btn-warning"
-            (click)="addToCart(book)">
+            (click)="addToCart(book)"
+            [disabled]="book?.status === 'Sold Out'">
             <i class="fas fa-cart-plus"></i>
           </button>
           <button
@@ -172,6 +167,7 @@
         <button
           style="background: #ffbb0d;padding: 4px"
           class="btn btn-group-sm"
+          [disabled]="selectedBook?.status === 'Sold Out'"
           (click)="addToCart(selectedBook)">
           Add to Cart
         </button>

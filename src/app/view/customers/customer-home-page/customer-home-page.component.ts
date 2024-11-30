@@ -280,6 +280,7 @@ export class CustomerHomePageComponent implements OnInit {
               email: '',
               city: '',
             };
+            this.loadBooks();
           });
         }
       },
