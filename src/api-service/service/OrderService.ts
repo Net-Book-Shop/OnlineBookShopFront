@@ -18,13 +18,27 @@ export class OrderService {
 
   public SaveOrder(payload: any): Observable<ApiResultFormatModel> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'order/saveOrder', payload, { headers });
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'order/saveOrder', payload, {headers});
   }
 
   public AddBookReviewAndRating(payload: any): Observable<ApiResultFormatModel> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/AddBookReviewAndRating', payload, { headers });
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/AddBookReviewAndRating', payload, {headers});
   }
 
+  public GetStatusWiseOrderList(payload: any): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'order/GetStatusWiseOrderList', payload, {headers});
+  }
+
+  public UpdateOrderStatus(payload: any): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'order/UpdateOrderStatus', payload, {headers});
+  }
+
+  public getAllCustomers(): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'customer/GetAllCustomer', null, {headers});
+  }
 
 }

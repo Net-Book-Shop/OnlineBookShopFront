@@ -61,11 +61,6 @@ export class BookService {
     return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/GetAllBookCategoryWise', payload, { headers });
   }
 
-  public AddBookReviewAndRating(payload: any): Observable<ApiResultFormatModel> {
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/AddBookReviewAndRating', payload, { headers });
-  }
-
   public GetAllBookDateAndCodeWise(payload: any): Observable<ApiResultFormatModel> {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/GetAllBookDateAndCodeWise', payload, { headers });
@@ -75,4 +70,9 @@ export class BookService {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/UpdateBookDetail', payload, { headers });
   }
+  public GetAllBookWiseReviews(payload: any): Observable<ApiResultFormatModel> {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<ApiResultFormatModel>(this.BASEURL + 'book/GetAllBookWiseReviews', payload, { headers });
+  }
+
 }

@@ -63,6 +63,9 @@ export class routes {
   public static get userPrivilege(): string {
     return this.users + '/user-privilege';
   }
+  public static get customerList(): string {
+    return this.users + '/customer-lists';
+  }
 
   public static get updateProfile(): string {
     return this.users + '/update-profile';
@@ -74,11 +77,19 @@ export class routes {
   public static get report(): string {
     return this.core + '/report';
   }
-  public static get ripReport(): string {
-    return this.report + '/trip-report';
+
+  public static get orderReport(): string {
+    return this.report + '/order-report';
   }
-  public static get driverReport(): string {
-    return this.report + '/driver-report';
+
+  public static get customerReport(): string {
+    return this.report + '/customer-list';
+  }
+  public static get bookReviewReport(): string {
+    return this.report + '/book-review-report';
+  }
+  public static get bookReport(): string {
+    return this.report + '/book-report';
   }
 
   public static get book(): string {
@@ -94,6 +105,14 @@ export class routes {
   public static get category(): string {
     return this.book + '/category';
   }
+
+  public static get order(): string {
+    return this.core + '/order';
+  }
+  public static get viewOrder(): string {
+    return this.order + '/view-order';
+  }
+
 
 
 

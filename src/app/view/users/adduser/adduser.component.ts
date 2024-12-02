@@ -7,7 +7,6 @@ import {AuthService} from "../../../../api-service/service/AuthService";
 import {SweetalertService} from "../../../shared/sweetalert/sweetalert.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {userList} from "../../../shared/model/page.model";
-import {DriverService} from "../../../../api-service/service/DriverService";
 import {RoleService} from "../../../../api-service/service/RoleService";
 import {Sort} from "@angular/material/sort";
 import {UserService} from "../../../../api-service/service/UserService";
@@ -55,7 +54,7 @@ export class AdduserComponent  {
   }
 
   constructor(private storage: WebstorgeService, private authService: AuthService,
-              private driverService: DriverService, private roleService: RoleService, private userService: UserService) {
+              private roleService: RoleService, private userService: UserService) {
 
     this.roleWiseDataLoad();
 
@@ -148,16 +147,16 @@ export class AdduserComponent  {
     }).then((result) => {
       if (result.isConfirmed) {
         // Call the service to delete the user
-        this.driverService.deleteUser(userId).subscribe(
-          () => {
-            Swal.fire('Deleted!', 'User Deleted Successfully.', 'success');
-            this.roleWiseDataLoad();
-          },
-          error => {
-            console.error('Error deleting user:', error);
-            Swal.fire('Error', 'Failed to delete the user.', 'error');
-          }
-        );
+        // this.driverService.deleteUser(userId).subscribe(
+        //   () => {
+        //     Swal.fire('Deleted!', 'User Deleted Successfully.', 'success');
+        //     this.roleWiseDataLoad();
+        //   },
+        //   error => {
+        //     console.error('Error deleting user:', error);
+        //     Swal.fire('Error', 'Failed to delete the user.', 'error');
+        //   }
+        // );
       }
     });
   }

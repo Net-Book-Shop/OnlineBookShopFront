@@ -1,0 +1,15 @@
+.table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.table img {
+  border-radius: 4px;
+  object-fit: cover;
+}

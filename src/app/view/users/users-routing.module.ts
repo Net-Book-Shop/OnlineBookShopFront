@@ -14,7 +14,7 @@ const routes: Routes = [
           import('./adduser/adduser.module').then((m) => m.AdduserModule),
       },
       {
-        path: 'user-lists',
+        path: 'customer-lists',
         loadChildren: () =>
           import('./userlists/userlists.module').then((m) => m.UserlistsModule),
       },
@@ -27,12 +27,7 @@ const routes: Routes = [
         path: 'update-profile',
         loadChildren: () =>
           import('./updateprofile/updateprofile.module').then((m) => m.UpdateprofileModule),
-      },
-      {
-        path: 'add-vehicle',
-        loadChildren: () =>
-          import('./managevehicles/managevehicles.module').then((m) => m.ManagevehiclesModule),
-      },
+      }
     ],
   },
 ];

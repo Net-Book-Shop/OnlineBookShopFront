@@ -139,10 +139,10 @@ export class SidebarService {
               subRoutes: [],
             },
             {
-              menuValue: 'Update Profile',
+              menuValue: 'View Customers',
               hasSubRoute: false,
               showSubRoute: false,
-              route: routes.updateProfile,
+              route: routes.customerList,
               subRoutes: [],
             },
             {
@@ -164,6 +164,29 @@ export class SidebarService {
       ],
     },
     {
+      tittle: 'Order',
+      showAsTab: true,
+      separateRoute: false,
+      menu: [
+        {
+          menuValue: 'Order',
+          route: routes.order,
+          hasSubRoute: true,
+          showSubRoute: false,
+          icon: 'book',
+          subMenus: [
+            {
+              menuValue: 'View Order',
+              hasSubRoute: false,
+              showSubRoute: false,
+              route: routes.viewOrder,
+              subRoutes: [],
+            },
+          ],
+        },
+      ],
+    },
+    {
       tittle: 'Report',
       showAsTab: true,
       separateRoute: false,
@@ -176,17 +199,31 @@ export class SidebarService {
           icon: 'bar-chart-2',
           subMenus: [
             {
-              menuValue: 'Trip Report',
+              menuValue: 'Order Report',
               hasSubRoute: false,
               showSubRoute: false,
-              route: routes.ripReport,
+              route: routes.orderReport,
               subRoutes: [],
             },
             {
-              menuValue: 'Driver Report',
+              menuValue: 'Customer Report',
               hasSubRoute: false,
               showSubRoute: false,
-              route: routes.driverReport,
+              route: routes.customerReport,
+              subRoutes: [],
+            },
+            {
+              menuValue: 'Book Review Report',
+              hasSubRoute: false,
+              showSubRoute: false,
+              route: routes.bookReviewReport,
+              subRoutes: [],
+            },
+            {
+              menuValue: 'Book Report',
+              hasSubRoute: false,
+              showSubRoute: false,
+              route: routes.bookReport,
               subRoutes: [],
             },
           ],

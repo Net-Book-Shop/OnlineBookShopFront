@@ -1,0 +1,65 @@
+<div class="page-header">
+  <div class="page-title">
+    <h4>Customer</h4>
+    <h6>View and Download report</h6>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div *ngIf="isLoading" class="text-center my-4">
+      <span>Loading...</span>
+    </div>
+    <div class="card mb-0 border-0">
+      <div class="card-body pb-0">
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" (click)="exportToExcel(customers,'Customer report')"
+              ><img src="../../../../assets/img/icons/pdf.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" (click)="exportToExcel(customers,'Customer report')"
+              ><img src="../../../../assets/img/icons/excel.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print" (click)="exportToExcel(customers,'Customer report')"
+              ><img src="../../../../assets/img/icons/printer.svg" alt="img"
+              /></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isLoading && customers.length > 0" class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Mobile Number</th>
+          <th>Active</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let customer of customers">
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.city || 'N/A' }}</td>
+          <td>{{ customer.mobileNumber }}</td>
+          <td>{{ customer.isActive ? 'ACTIVE' : 'DE ACTIVE' }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!isLoading && customers.length === 0" class="text-center my-4">
+      <h5>No matching records found.</h5>
+    </div>
+  </div>
+</div>

@@ -63,6 +63,7 @@
         <thead>
         <tr>
           <th>Book Code</th>
+          <th>Image</th>
           <th>Book Name</th>
           <th>Category</th>
           <th>Subcategory</th>
@@ -76,6 +77,9 @@
         <tbody>
         <tr *ngFor="let book of books">
           <td>{{ book.bookCode }}</td>
+          <td>
+            <img [src]="book.productImage" alt="Book Image" width="50" height="50" *ngIf="book.productImage" />
+          </td>
           <td>{{ book.bookName }}</td>
           <td>{{ book.categoryName || '-' }}</td>
           <td>{{ book.subCategoryName || '-' }}</td>

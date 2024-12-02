@@ -1,0 +1,185 @@
+<div class="page-header">
+  <div class="page-title">
+    <h4>Orders</h4>
+    <h6>View and Update Orders</h6>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-top">
+      <!-- Search and filter buttons -->
+    </div>
+
+    <!-- Filter Section -->
+    <div class="card mb-0 border-0">
+      <div class="card-body pb-0">
+        <div class="row">
+          <div class="col-lg-2 col-sm-6 col-12">
+            <div class="form-group">
+              <label class="required">From Date</label>
+              <input type="date" [(ngModel)]="fromDate" class="form-control" />
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 col-12">
+            <div class="form-group">
+              <label class="required">To Date</label>
+              <input type="date" [(ngModel)]="toDate" class="form-control" />
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 col-12">
+            <div class="form-group">
+              <label>Order Code</label>
+              <input type="text" [(ngModel)]="orderCode" class="form-control" placeholder="Enter Order Code" />
+            </div>
+          </div>
+          <div class="col-lg-2 col-sm-6 col-12">
+            <div class="form-group">
+              <label>Status</label>
+              <select [(ngModel)]="status" class="form-control">
+                <option value="">All</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Pickup">Pickup</option>
+                <option value="Pending">Pending</option>
+                <option value="Cancel">Cancel</option>
+
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+            <div class="form-group">
+              <button class="btn btn-warning ms-auto mt-4" (click)="searchOrders()" [disabled]="isLoading">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div *ngIf="isLoading" class="text-center my-4">
+      <span>Loading...</span>
+    </div>
+
+    <div class="table-responsive" *ngIf="!isLoading && orders.length > 0">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>Order Code</th>
+          <th>Customer Name</th>
+          <th>Update Status</th>
+          <th>Status</th>
+          <th>Order Amount</th>
+          <th>Payment Method</th>
+          <th>Create Date</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.orderCode }}</td>
+          <td>{{ order.customerName }}</td>
+          <td>
+            <select
+              [(ngModel)]="order.status"
+              [disabled]="!editMode[order.orderCode]"
+              class="form-control form-control-sm"
+            >
+              <option *ngFor="let option of getStatusOptions(order.status)" [value]="option">
+                {{ option }}
+              </option>
+            </select>
+          </td>
+          <td>{{ order.status }}</td>
+          <td>{{ order.orderAmount }}</td>
+          <td>{{ order.paymentMethod||"N/A" }}</td>
+          <td>{{ order.createDate }}</td>
+          <td>
+            <button
+              class="btn btn-sm btn-primary"
+              *ngIf="!editMode[order.orderCode]"
+              (click)="enableEdit(order.orderCode)"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-sm btn-warning mr-2"
+              *ngIf="editMode[order.orderCode]"
+              (click)="saveOrder(order)"
+            >
+              Update
+            </button>
+            <button
+              class="btn btn-sm btn-danger mr-2"
+              *ngIf="editMode[order.orderCode]"
+              (click)="cancelEdit(order.orderCode)"
+            >
+              Cancel
+            </button>
+            <button
+              class="btn btn-sm btn-info ml-2"
+              data-bs-toggle="modal"
+              data-bs-target="#viewOrderModalLabel"
+              (click)="viewOrderDetails(order)"
+            >
+              View
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="!isLoading && orders.length === 0" class="text-center my-4">
+      <h5>No matching records found.</h5>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for Viewing Order Details -->
+
+<div
+  class="modal fade"
+  id="viewOrderModalLabel"
+  tabindex="-1"
+  aria-labelledby="viewOrderModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" >Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Book Code</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of selectedOrder?.orderDetails">
+            <td>{{ item.bookCode }}</td>
+            <td>{{ item.unitSellingPrice | currency }}</td>
+            <td>{{ item.qty }}</td>
+          </tr>
+          </tbody>
+        </table>
+        <div>
+          <p style="margin: 0"><strong>Name: </strong>{{ selectedOrder?.customer ||'N/A' }}</p>
+          <p style="margin: 0"><strong>Address: </strong>{{ selectedOrder?.address ||"N/A" }}</p>
+          <p style="margin: 0"><strong>Mobile Number: </strong>{{ selectedOrder?.mobileNumber ||"N/A" }}</p>
+          <p style="margin: 0"><strong>Email: </strong>{{ selectedOrder?.customerEmail || "N/A"}}</p>
+          <p style="margin: 0"><strong>Payment Method: </strong>{{ selectedOrder?.paymentMethod ||"N/A" }}</p>
+          <p style="margin: 0"><strong>Bank Transaction: </strong>{{ selectedOrder?.bankTransactionId ||"N/A"}}</p>
+          <p style="margin: 0"><strong>Total Amount: </strong>{{ selectedOrder?.orderAmount | currency }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
