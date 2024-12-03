@@ -17,6 +17,10 @@ export class AuthService {
     return this.http.post<any>(environment.baseURL +'Auth/Login', payLoad);
   }
 
+  register(payLoad: any) {
+    return this.http.post<any>(environment.baseURL +'values/Register', payLoad);
+  }
+
   addUser(payLoad: any) {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     return this.http.post<any>(environment.baseURL + 'auth/signup', payLoad,{headers});

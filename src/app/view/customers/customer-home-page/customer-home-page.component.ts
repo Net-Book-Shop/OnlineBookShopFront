@@ -3,6 +3,7 @@ import {routes} from "../../../core/routes-path/routes";
 import {BookService} from "../../../../api-service/service/BookService ";
 import Swal from "sweetalert2";
 import {OrderService} from "../../../../api-service/service/OrderService";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -43,8 +44,19 @@ export class CustomerHomePageComponent implements OnInit {
     customerName: '',
     mobileNumber: '',
   };
+
+
+  fromDate = '';
+  toDate = '';
+  orderCode = '';
+  status = '';
+  createUser: string = sessionStorage.getItem('userId') || '';
+  orders: any[] = [];
+  isLoading = false;
+  selectedOrder: any = null;
+
   showAddReviewSection  = false;
-  constructor(private bookService: BookService, private orderService: OrderService) {
+  constructor(private bookService: BookService, private orderService: OrderService,private route: Router) {
   }
 
 
@@ -170,6 +182,23 @@ export class CustomerHomePageComponent implements OnInit {
   }
 
   addToCart(book: any): void {
+    const accessToken = sessionStorage.getItem('token');
+    const role = sessionStorage.getItem('role');
+
+    if (!accessToken || !role) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Cannot Add to Cart',
+        text: 'Please log in first to add items to the cart.',
+        confirmButtonText: 'Login',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.route.navigate([routes.signIn]);
+        }
+      });
+      return;
+    }
+
     const existingBook = this.cart.find((item) => item.id === book.id);
     if (existingBook) {
       Swal.fire({
@@ -240,6 +269,7 @@ export class CustomerHomePageComponent implements OnInit {
       paymentMethod: this.paymentMethod,
       bankTransactionId: this.paymentMethod === 'Bank' ? this.bankTransactionId : '',
       discount: this.discount,
+      createUser:sessionStorage.getItem('userId'),
       orderAmount: this.calculateTotal(),
       totalCostPrice: this.cart.reduce((sum, item) => sum + item.costPrice * item.qty, 0), // Adjust `costPrice` as per your data structure
       orderDetails: this.cart.map((item) => ({
@@ -326,6 +356,82 @@ export class CustomerHomePageComponent implements OnInit {
       },
     });
   }
+
+
+  searchOrders(): void {
+    this.isLoading = true;
+    const payload = {
+      fromDate: this.fromDate,
+      toDate: this.toDate,
+      orderCode: this.orderCode,
+      status: this.status,
+      createUser: this.createUser,
+    };
+    this.loadTableData(payload);
+  }
+
+  loadTableData(payload: any): void {
+    this.orderService.GetStatusWiseOrderList(payload).subscribe({
+      next: (response) => {
+        if (response.statusCode === 200) {
+          this.orders = response.data;
+        } else {
+          this.orders = [];
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Error fetching orders:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Error fetching orders. Please try again later.',
+        });
+        this.isLoading = false;
+      },
+    });
+  }
+
+  viewOrderDetails(order: any): void {
+    this.selectedOrder = order;
+
+    // Build table rows manually
+    const orderDetailsTable = order.orderDetails.map((item: any) => `
+    <tr>
+      <td>${item.bookCode}</td>
+      <td>${item.unitSellingPrice}</td>
+      <td>${item.qty}</td>
+    </tr>
+  `).join('');
+
+    Swal.fire({
+      title: `Order Details - ${order.orderCode}`,
+      html: `
+      <strong>Customer Name:</strong> ${order.customerName} <br/>
+      <strong>Address:</strong> ${order.address} <br/>
+      <strong>Mobile:</strong> ${order.mobileNumber} <br/>
+      <strong>Email:</strong> ${order.customerEmail} <br/>
+      <strong>Order Amount:</strong> ${order.orderAmount} <br/>
+      <strong>Payment Method:</strong> ${order.paymentMethod} <br/>
+      <strong>Status:</strong> ${order.status} <br/>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Book Code</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${orderDetailsTable}
+        </tbody>
+      </table>
+    `,
+      showCloseButton: true,
+      confirmButtonText: 'Close',
+    });
+  }
+
 
 
 }

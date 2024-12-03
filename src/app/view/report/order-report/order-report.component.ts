@@ -13,6 +13,7 @@ export class OrderReportComponent implements OnInit{
   fromDate = '';
   toDate = '';
   orderCode = '';
+  createUser = '';
   isLoading = false;
   orders: any[] = [];
   status = '';
@@ -26,6 +27,7 @@ export class OrderReportComponent implements OnInit{
       toDate: this.toDate,
       orderCode: this.orderCode,
       status: this.status,
+      createUser: this.createUser,
     };
     this.loadTableData(payload);
   }
@@ -37,6 +39,7 @@ export class OrderReportComponent implements OnInit{
       toDate: this.toDate,
       orderCode: this.orderCode,
       status: this.status,
+      createUser: this.createUser,
     };
     this.loadTableData(payload);
   }
@@ -73,7 +76,7 @@ export class OrderReportComponent implements OnInit{
     const workbook = XLSX.utils.book_new();
 
     // Append the worksheet to the workbook
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Trip Reports');
+    XLSX.utils.book_append_sheet(workbook, worksheet, reportName);
 
     // Generate a buffer for the Excel file
     const excelBuffer = XLSX.write(workbook, {bookType: 'xlsx', type: 'array'});

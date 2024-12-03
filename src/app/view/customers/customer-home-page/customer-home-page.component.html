@@ -49,6 +49,16 @@
           <a
             class="text-white text-decoration-none position-relative"
             data-bs-toggle="modal"
+            data-bs-target="#orderHistoryModal"
+          >
+            <img src="./assets/img/icons/salesinvoice.svg" alt="Cart" width="24"/>
+          </a>
+
+        </li>
+        <li class="nav-item me-3">
+          <a
+            class="text-white text-decoration-none position-relative"
+            data-bs-toggle="modal"
             data-bs-target="#cartModal"
           >
             <img src="./assets/img/icons/dash1.svg" alt="Cart" width="24"/>
@@ -538,6 +548,99 @@
           </form>
         </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Order History Modal -->
+<div
+  class="modal fade"
+  id="orderHistoryModal"
+  tabindex="-1"
+  aria-labelledby="orderHistoryModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderHistoryModalLabel">Order History</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >X</button>
+      </div>
+      <div class="modal-body">
+        <!-- Search Filters -->
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="fromDate"
+              placeholder="From Date"
+            />
+          </div>
+          <div class="col-md-3">
+            <input
+              type="date"
+              class="form-control"
+              [(ngModel)]="toDate"
+              placeholder="To Date"
+            />
+          </div>
+          <div class="col-md-3">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="orderCode"
+              placeholder="Order Code"
+            />
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-primary w-100" (click)="searchOrders()">Search</button>
+          </div>
+        </div>
+        <!-- Order Table -->
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Order Code</th>
+              <th>Customer Name</th>
+              <th>Mobile</th>
+              <th>Email</th>
+              <th>Order Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of orders">
+              <td>{{ order.orderCode }}</td>
+              <td>{{ order.customerName }}</td>
+              <td>{{ order.mobileNumber }}</td>
+              <td>{{ order.customerEmail }}</td>
+              <td>{{ order.orderAmount | currency }}</td>
+              <td>{{ order.status }}</td>
+              <td>
+                <button
+                  class="btn btn-info btn-sm"
+                  (click)="viewOrderDetails(order)"
+                >
+                  View
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="!orders.length">
+              <td colspan="7" class="text-center">No orders found</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

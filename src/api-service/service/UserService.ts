@@ -27,15 +27,24 @@ export class UserService {
 
   }
 
-  findUserDetailByCode( body: any) {
-    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
-    return this.http.post<any>(this.BASEURL+'user/by/code', body,{ headers });
-
-  }
 
   otpSend( body: any) {
     const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
     return this.http.post<any>(this.BASEURL+'user/otpSend', body,{ headers });
+
+  }
+
+  GetRoleWiseUserlist( body: any) {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<any>(this.BASEURL+'values/GetRoleWiseUserlist', body,{ headers });
+  }
+  UpdateUser( body: any) {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<any>(this.BASEURL+'values/UpdateUser', body,{ headers });
+  }
+  GetCustomerList( body: any) {
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + sessionStorage.getItem('token'));
+    return this.http.post<any>(this.BASEURL+'customer/GetAllCustomer', body,{ headers });
 
   }
 }

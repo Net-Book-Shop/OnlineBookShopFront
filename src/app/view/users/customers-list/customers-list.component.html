@@ -1,0 +1,87 @@
+<div class="page-header">
+  <div class="page-title">
+    <h4>Customer </h4>
+    <h6>Customer List</h6>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <!-- Filter Section -->
+    <div class="card mb-0 border-0">
+      <div class="card-body pb-0">
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" (click)="exportToExcel(filteredCustomers,'Customer report')"
+              ><img src="../../../../assets/img/icons/pdf.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel" (click)="exportToExcel(filteredCustomers,'Customer report')"
+              ><img src="../../../../assets/img/icons/excel.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print" (click)="exportToExcel(filteredCustomers,'Customer report')"
+              ><img src="../../../../assets/img/icons/printer.svg" alt="img"
+              /></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- Search Input -->
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search customers..."
+        [(ngModel)]="searchQuery"
+        (input)="filterCustomers()"
+      />
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-responsive mt-3">
+      <table class="table table-bordered">
+        <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Mobile Number</th>
+          <th>Order Count</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let customer of filteredCustomers; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.city || 'N/A' }}</td>
+          <td>{{ customer.mobileNumber }}</td>
+          <td>{{ customer.orderCount }}</td>
+          <td>
+              <span
+                [ngClass]="{
+                  'text-success': customer.isActive,
+                  'text-danger': !customer.isActive
+                }"
+              >
+                {{ customer.isActive ? 'Active' : 'Inactive' }}
+              </span>
+          </td>
+        </tr>
+        <tr *ngIf="filteredCustomers.length === 0">
+          <td colspan="8" class="text-center">No matching customers found.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

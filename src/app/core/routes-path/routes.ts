@@ -67,11 +67,9 @@ export class routes {
     return this.users + '/customer-lists';
   }
 
-  public static get updateProfile(): string {
-    return this.users + '/update-profile';
-  }
-  public static get addVehicle(): string {
-    return this.users + '/add-vehicle';
+
+  public static get viewUsers(): string {
+    return this.users + '/view-users';
   }
 
   public static get report(): string {

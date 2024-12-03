@@ -12,6 +12,7 @@ export class OrdersViewComponent implements OnInit{
   toDate = '';
   orderCode = '';
   status = '';
+  createUser='';
   orders: any[] = [];
   isLoading = false;
   editMode: { [key: string]: boolean } = {};
@@ -26,6 +27,7 @@ export class OrdersViewComponent implements OnInit{
       toDate: this.toDate,
       orderCode: this.orderCode,
       status: this.status,
+      createUser: this.createUser,
     };
     this.loadTableData(payload);
   }
@@ -37,6 +39,7 @@ export class OrdersViewComponent implements OnInit{
       toDate: this.toDate,
       orderCode: this.orderCode,
       status: this.status,
+      createUser: this.createUser,
     };
     this.loadTableData(payload);
   }

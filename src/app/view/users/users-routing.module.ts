@@ -16,7 +16,7 @@ const routes: Routes = [
       {
         path: 'customer-lists',
         loadChildren: () =>
-          import('./userlists/userlists.module').then((m) => m.UserlistsModule),
+          import('./customers-list/customers-list.module').then((m) => m.CustomersListModule),
       },
       {
         path: 'user-privilege',
@@ -24,9 +24,9 @@ const routes: Routes = [
           import('./user-privilege/user-privilege.module').then((m) => m.UserPrivilegeModule),
       },
       {
-        path: 'update-profile',
+        path: 'view-users',
         loadChildren: () =>
-          import('./updateprofile/updateprofile.module').then((m) => m.UpdateprofileModule),
+          import('./userlists/userlists.module').then((m) => m.UserlistsModule),
       }
     ],
   },

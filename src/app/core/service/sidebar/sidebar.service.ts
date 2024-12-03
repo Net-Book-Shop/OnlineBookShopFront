@@ -146,10 +146,10 @@ export class SidebarService {
               subRoutes: [],
             },
             {
-              menuValue: 'Add Vehicle',
+              menuValue: 'View Users',
               hasSubRoute: false,
               showSubRoute: false,
-              route: routes.addVehicle,
+              route: routes.viewUsers,
               subRoutes: [],
             },
             {

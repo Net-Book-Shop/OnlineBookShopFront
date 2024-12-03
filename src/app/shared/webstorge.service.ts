@@ -20,12 +20,10 @@ export class WebstorgeService {
     sessionStorage.setItem('token', data.accessToken);
     sessionStorage.setItem('userId', data.userCode);
     sessionStorage.setItem('privilages', data.privilages);
-    sessionStorage.setItem('vehicleType', data.vehicleType);
 
     console.log("privilage..",data.privilages)
     console.log("role..",data.role)
-    // role wise manage main ui
-    // this.router.navigate([routes.dashboard]);
+
     const role = (sessionStorage.getItem("role"))
     if(role == "Customer"){
       this.router.navigate([routes.customerHomePage]);
